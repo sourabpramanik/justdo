@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "viron",
+    "name": "Viron",
     "slug": "viron",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,16 +17,21 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.thexenon.viron",
+      "buildNumber": "1.0.0"
     },
     "android": {
+      "package": "com.thexenon.viron",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#FFFFFF"        
       }
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    }    
   }
 }
