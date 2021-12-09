@@ -1,13 +1,14 @@
-import React, {useCallback} from 'react'
-import {Heading, VStack, HStack, Avatar, IconButton, useColorModeValue, Center} from 'native-base';
+import React, {useCallback, useState} from 'react'
+import {Heading, VStack, HStack, Avatar, IconButton, useColorModeValue, Center, Button, Icon} from 'native-base';
 import {DrawerContentComponentProps} from '@react-navigation/drawer'
 import AnimatedColorBox from './animate-color-box'
 import ThemeToggle from './theme-toggle'
-import {Feather} from '@expo/vector-icons'
+import {Feather,AntDesign} from '@expo/vector-icons'
 import MenuButton from './menu-button'
-
+import {Auth} from "aws-amplify"
 const Sidebar=(props: DrawerContentComponentProps)=>{
     const {state, navigation} = props
+    const [isLoggingOut, setLoggingOut] = useState(false)
     const currentRoute = state.routeNames[state.index]
     const handlePressBackButton = useCallback(()=>{
         navigation.closeDrawer()
@@ -18,6 +19,10 @@ const Sidebar=(props: DrawerContentComponentProps)=>{
     const handlePressMenuAbout = useCallback(()=>{
         navigation.navigate("About")
     }, [navigation])
+    const handleLogout = useCallback(()=>{
+        setLoggingOut(true)
+        Auth.signOut();
+    },[Auth])
 
     return(
         <AnimatedColorBox safeArea flex={1} bg={useColorModeValue('blue.50', 'darkBlue.800')} p={7}>
@@ -49,6 +54,29 @@ const Sidebar=(props: DrawerContentComponentProps)=>{
             </VStack> 
             <Center>
                 <ThemeToggle/>
+                <Button 
+                size="lg"
+                bg="red.500"
+                borderRadius="full" 
+                w="full"                                      
+                leftIcon={
+                    <Icon as={AntDesign} name="logout" size="sm" opacity={0.5} />
+                }       
+                onPress={handleLogout} 
+                isLoading={isLoggingOut}
+                _loading={{
+                bg: "red.600:alpha.70",
+                _text: {
+                    color: "coolGray.700",
+                },
+                }}
+                _spinner={{
+                color: "white",
+                }}
+                isLoadingText="Logging Out" 
+                >
+                    Logout
+                </Button>
             </Center>           
         </AnimatedColorBox>
     )
