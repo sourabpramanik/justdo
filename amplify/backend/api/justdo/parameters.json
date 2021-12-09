@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "justdo",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authjustdo",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
