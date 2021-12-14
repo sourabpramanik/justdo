@@ -6,6 +6,7 @@ import ThemeToggle from './theme-toggle'
 import {Feather,AntDesign} from '@expo/vector-icons'
 import MenuButton from './menu-button'
 import {Auth} from "aws-amplify"
+import CustomButton from './custom-button'
 const Sidebar=(props: DrawerContentComponentProps)=>{
     const {state, navigation} = props
     const [isLoggingOut, setLoggingOut] = useState(false)
@@ -42,8 +43,8 @@ const Sidebar=(props: DrawerContentComponentProps)=>{
                     />
                 </HStack>
                 <Avatar source={require('../assets/profile.png')} size="xl" mb={6} borderColor="primary.300" borderRadius={100} borderWidth={3}/>
-                <Heading mb={4} size="xl">
-                    Viron
+                <Heading mb={4} size="2xl">
+                    Hey, Sourab
                 </Heading>
                 <MenuButton active={currentRoute==="Main"} onPress={handlePressMenuMain} icon="inbox">
                     To Dos
@@ -54,29 +55,20 @@ const Sidebar=(props: DrawerContentComponentProps)=>{
             </VStack> 
             <Center>
                 <ThemeToggle/>
-                <Button 
-                size="lg"
+                <CustomButton                 
                 bg="red.500"
-                borderRadius="full" 
-                w="full"                                      
+                borderRadius={10}                                                     
                 leftIcon={
-                    <Icon as={AntDesign} name="logout" size="sm" opacity={0.5} />
+                    <Icon as={AntDesign} name="logout" size="sm" opacity={0.5} color="white"/>
                 }       
-                onPress={handleLogout} 
-                isLoading={isLoggingOut}
-                _loading={{
-                bg: "red.600:alpha.70",
-                _text: {
-                    color: "coolGray.700",
-                },
-                }}
-                _spinner={{
-                color: "white",
-                }}
-                isLoadingText="Logging Out" 
+                onPress={()=>console.log("logout")
+                } 
+                isLoading={true}
+                loadingBg={useColorModeValue('red.600:alpha.70', 'red.500:alpha.70')}
+                loadingText="Taking you out.."                
                 >
                     Logout
-                </Button>
+                </CustomButton>
             </Center>           
         </AnimatedColorBox>
     )
