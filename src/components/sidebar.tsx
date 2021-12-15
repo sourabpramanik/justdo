@@ -47,7 +47,7 @@ const Sidebar=(props: DrawerContentComponentProps)=>{
                     />
                 </HStack>
                 <HStack justifyContent="center" alignItems="center">
-                    <Avatar source={require('../assets/justdo-logo.png')} size="lg" mb={6}  borderRadius={10}/>
+                    <Avatar source={require('../assets/justdo-logo.png')} size="md" mb={6}  borderRadius={10}/>
                     <Heading mb={4} mx="4" size="xl" bold>
                         JustDo.
                     </Heading>

@@ -10,8 +10,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "content": {
-                    "name": "content",
+                "subject": {
+                    "name": "subject",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
@@ -21,6 +21,13 @@ export const schema = {
                     "name": "userID",
                     "isArray": false,
                     "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "done": {
+                    "name": "done",
+                    "isArray": false,
+                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -62,10 +69,7 @@ export const schema = {
                     "properties": {
                         "rules": [
                             {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "identityClaim": "cognito:username",
+                                "allow": "public",
                                 "operations": [
                                     "create",
                                     "update",
@@ -145,10 +149,7 @@ export const schema = {
                     "properties": {
                         "rules": [
                             {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "identityClaim": "cognito:username",
+                                "allow": "public",
                                 "operations": [
                                     "create",
                                     "update",
@@ -164,5 +165,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "e1ea944c2a2ae9a1e4251e7959cafaa4"
+    "version": "284b5c7ba06a7210d2c0eeb886577c62"
 };

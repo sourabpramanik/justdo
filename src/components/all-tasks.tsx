@@ -1,8 +1,10 @@
-import React, {useCallback, useRef} from 'react'
+import React, {useCallback, useRef, useContext} from 'react'
 import { AnimatePresence, View} from 'moti'
 import TaskItem from './task-item'
 import {makeStyledComponent} from '../utils/styled'
 import { PanGestureHandlerProps, ScrollView} from 'react-native-gesture-handler' 
+import TaskContext from '../context/task'
+
 const StyledView = makeStyledComponent(View)
 const StyledScrollView = makeStyledComponent(ScrollView)
 
@@ -43,17 +45,21 @@ export const AnimatedTaskItem = (props: TaskItemProps) =>{
         onRemove,
         onPressLabel
     } = props
+    const {handleCreateTask, handleDeleteTask, handleTaskDone, handleSubjectUpdate} = useContext(TaskContext)
 
     const handleToggleCheckBox = useCallback(()=>{
         onToggleItem(data)
+        handleTaskDone(data);  
     }, [data,onToggleItem])
 
     const handleChangeSubject = useCallback(subject=>{
         onSubjectChange(data, subject)
+        // handleSubjectUpdate(data, subject)       
     }, [data,onSubjectChange])
 
     const handleFinishEditing = useCallback(()=>{
         onFinishEditing(data)
+        handleSubjectUpdate(data);
     }, [data, onFinishEditing])
 
     const handlePressLabel = useCallback(()=>{
@@ -62,6 +68,7 @@ export const AnimatedTaskItem = (props: TaskItemProps) =>{
 
     const handleRemove = useCallback(()=>{
         onRemove(data)
+        handleDeleteTask(data)
     },[data, onRemove])
 
 

@@ -1,12 +1,14 @@
-type TaskItem @model @auth(rules: [{allow: owner}]) {
+type TaskItem @model @auth(rules: [{allow: public}]) {
   id: ID!
-  content: String!
+  subject: String!
   userID: ID @index(name: "byUser")
+  done: Boolean
 }
 
-type User @model @auth(rules: [{allow: owner}]) {
+type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   email: String!
   TaskItems: [TaskItem] @hasMany(indexName: "byUser", fields: ["id"])
 }
+ 

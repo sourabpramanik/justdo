@@ -14,8 +14,9 @@ type UserMetaData = {
 
 export declare class TaskItem {
   readonly id: string;
-  readonly content: string;
+  readonly subject: string;
   readonly userID?: string;
+  readonly done?: boolean;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<TaskItem, TaskItemMetaData>);

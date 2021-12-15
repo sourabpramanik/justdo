@@ -13,7 +13,7 @@ function AboutScreen() {
       w="full"
     >
       <Masthead
-        title="About this app"
+        title="About JustDo."
         image={require('../assets/masthead.png')}
       >
         <NavBar />
@@ -29,8 +29,8 @@ function AboutScreen() {
         <VStack flex={1} space={4}>
           <Box alignItems="center">
             <Image
-              source={require('../assets/profile.png')}
-              borderRadius="full"
+              source={require('../assets/justdo-logo.png')}
+              borderRadius={10}
               resizeMode="cover"
               w={120}
               h={120}
@@ -38,7 +38,7 @@ function AboutScreen() {
             />
           </Box>
           <Text fontSize="md" w="full">
-            Viron is To Do app Created by Sourab Pramanik working as Full-Stack freelancer.
+            JustDo is a To-Do App Created by Sourab Pramanik and Jaydeep Rao working as Full-Stack Freelancer and UI-UX Designer Respectively
           </Text>
           {/* <LinkButton
             colorScheme="red"
@@ -61,6 +61,17 @@ function AboutScreen() {
             }
           >
             @sourab_pramanik
+          </LinkButton>
+          <LinkButton
+            colorScheme={useColorModeValue('blue', 'darkBlue')}
+            size="lg"
+            borderRadius="full"
+            href="https://twitter.com/jaydeeprao_"
+            leftIcon={
+              <Icon as={Feather} name="twitter" size="sm" opacity={0.5} />
+            }
+          >
+            @jaydeeprao_
           </LinkButton>
           {/* <Text fontSize="md" w="full">
             Are you looking for a Markdown note-taking app? Check out my app

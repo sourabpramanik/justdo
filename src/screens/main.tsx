@@ -1,4 +1,4 @@
-import React, {useCallback,useState, useContext} from 'react';
+import React, {useCallback,useState, useContext, useEffect} from 'react';
 import {
     Center,
     VStack,  
@@ -16,41 +16,31 @@ import shortid from 'shortid'
 import Masthead from '../components/masthead'
 import NavBar from '../components/navbar'
 import UserContext from '../context/user'
-const initialData = [
-    {
-        id: shortid.generate(),
-        subject: "Meeting with Jeff",
-        done: false
-    },
-    {
-        id: shortid.generate(),
-        subject: "Lunch with Brad",
-        done: false
-    },
-    {
-        id: shortid.generate(),
-        subject: "Follow up with UK Clients",
-        done: true
-    },
-]
+import TaskContext from '../context/task'
+
 export default function MainScreen(){
-    const [data, setData] = useState(initialData)
+    // const [data, setTaskItem] = useState(initialData)
     const [editingItemId, setEditingItemId] = useState<string | null>(null)
-    const {authUser}  = useContext(UserContext)
+    const {authUser} = useContext(UserContext)
+    const {taskItem, setTaskItem, queryData, handleCreateTask} = useContext(TaskContext)
+    useEffect(()=>{
+        queryData(authUser)
+    },[])
     const handleToggleTaskItem = useCallback(item => {
-        setData(prevData => {
+        setTaskItem(prevData => {
             const newData = [...prevData]
             const index = prevData.indexOf(item)
             newData[index] = {
                 ...item,
-                done: !item.done
+                done: !item.done                
             }
-            return newData
-        })
+            return newData            
+            
+        })                        
     },[])
 
     const handleChangeTaskItemSubject = useCallback((item, newSubject)=>{
-        setData(prevData =>{
+        setTaskItem(prevData =>{
             const newData = [...prevData]
             const index = prevData.indexOf(item)
             newData[index] = {
@@ -61,7 +51,8 @@ export default function MainScreen(){
         })
     },[])
 
-    const handleFinishEditingTaskItem = useCallback(item=>{
+    const handleFinishEditingTaskItem = useCallback(item=>{        
+        
         setEditingItemId(null)
     },[])
 
@@ -70,7 +61,7 @@ export default function MainScreen(){
     },[])
 
     const handleRemoveItem = useCallback(item =>{
-        setData(prevData => {
+        setTaskItem(prevData => {
         const newData = prevData.filter(i => i !== item)
         return newData
         })
@@ -85,7 +76,7 @@ export default function MainScreen(){
             </Masthead>        
             <VStack flex={2} space={1}  mt="-20px" borderTopLeftRadius="20px" borderTopRightRadius="20px" pt="20px" bg={useColorModeValue('warmGray.50', 'primary.900')}>
                  <AllTasks
-                    data={data}
+                    data={taskItem}
                     onToggleItem={handleToggleTaskItem}
                     onSubjectChange={handleChangeTaskItemSubject}
                     onFinishEditing={handleFinishEditingTaskItem}
@@ -103,13 +94,13 @@ export default function MainScreen(){
             bg={useColorModeValue('blue.500', 'blue.400')}
             onPress={() => {
                 const id = shortid.generate()
-                setData([
+                setTaskItem([
                     {
                     id,
+                    userId:authUser?.attributes?.sub,
                     subject: '',
-                    done: false
                     },
-                    ...data
+                    ...taskItem
                 ])
                 setEditingItemId(id)
             }}
