@@ -1,16 +1,18 @@
 import React from 'react'
 import {Input, HStack, FormControl} from 'native-base'
+import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native'
 import {View} from 'moti'
 import {makeStyledComponent} from '../utils/styled'
 interface Props{
-    name: string
+    labelName: string
     placeholder: string
     fieldType: string
-    onInputChange?: () => void    
+    value: string
+    onChange?: () => void    
 }
 const StyledView = makeStyledComponent(View)
 const InputField = (props: Props)=>{
-    const {name, placeholder,fieldType, onInputChange} = props
+    const {labelName, value, placeholder,fieldType, onChange} = props
     return(
         
         <StyledView 
@@ -38,13 +40,10 @@ const InputField = (props: Props)=>{
             w="full" 
             px={4} 
             py={2}>
-                <FormControl.Label fontSize="lg">{name}</FormControl.Label>
-                <Input
-        
+                <FormControl.Label fontSize="lg" color="black">{labelName}</FormControl.Label>
+                <Input                        
                 w="full"
-                type={fieldType}
-                placeholder={placeholder}
-                onChange={onInputChange}
+                {...props}
                 fontSize="lg"
                 borderRadius={10}
                 px={4}            

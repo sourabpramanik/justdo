@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "TodoItem": {
-            "name": "TodoItem",
+        "TaskItem": {
+            "name": "TaskItem",
             "fields": {
                 "id": {
                     "name": "id",
@@ -42,7 +42,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "TodoItems",
+            "pluralName": "TaskItems",
             "attributes": [
                 {
                     "type": "model",
@@ -95,11 +95,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "TodoItems": {
-                    "name": "TodoItems",
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "TaskItems": {
+                    "name": "TaskItems",
                     "isArray": true,
                     "type": {
-                        "model": "TodoItem"
+                        "model": "TaskItem"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -157,5 +164,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "68929f677919bce43d3ccec64d6e9ebb"
+    "version": "e1ea944c2a2ae9a1e4251e7959cafaa4"
 };

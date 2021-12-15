@@ -1,12 +1,21 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useContext} from 'react'
 import {VStack, Text, Center, FormControl, Stack, Box} from 'native-base'
 import AnimatedColorBox from '../components/animate-color-box'
 import TitleMastHead from '../components/title-masthead'
 import InputField from '../components/input-field'
 import CustomButton from '../components/custom-button'
-
-
+import UserContext from '../context/user'
+import AnimatedModal from '../components/animated-modal'
 const Signup = (props)=>{
+    const {
+        formState, 
+        setFormState, 
+        handleSignUp, 
+        open, 
+        handleModalOverlay, 
+        handleSignupConfirmation,
+        signUpLoading,
+        confirmationLoading} = useContext(UserContext)
     const {navigation} = props
     const handleSignInNavigation = useCallback(()=>{
         navigation.navigate("Signin")
@@ -19,35 +28,51 @@ const Signup = (props)=>{
                     <FormControl isRequired>  
                         <InputField
                             placeholder="Enter your name"
-                            fieldType="name"
-                            name="Name"
+                            type="text"
+                            labelName="Name"
+                            value={formState.name}                            
+                            onChangeText={(value) => setFormState({ ...formState, name: value })}
                         />
                         <InputField
                             placeholder="Enter your email"
-                            fieldType="email"
-                            name="Email"
+                            type="email"
+                            labelName="Email"
+                            value={formState.email}                            
+                            onChangeText={(value) => setFormState({ ...formState, email: value })}
                         />  
                         <InputField
                             placeholder="Enter your Password"
-                            fieldType="password"
-                            name="Password"
+                            type="password"
+                            labelName="Password" 
+                            value={formState.password}                            
+                            onChangeText={(value) => setFormState({ ...formState, password: value })}                           
                         />                                                  
                         <CustomButton
                         bg="blue.500"
-                        isLoading={false}
+                        isLoading={signUpLoading}
                         loadingText="Please wait a moment"
                         loadingBg="blue.600:alpha.70"
                         borderRadius="10"
+                        onPress={handleSignUp}
                         >
-                            Let me in
+                            Sign Up 
                         </CustomButton>                                                
                     </FormControl>                                     
                     <Center justifyContent="flex-end" h="200">
                         <Text fontSize="lg" color="blue.500" onPress={handleSignInNavigation}>
                             Already have an account?
                         </Text>
-                    </Center>               
+                    </Center> 
+                    <AnimatedModal
+                    formState={formState}
+                    setFormState={setFormState}
+                    open={open}
+                    handleModalOverlay={handleModalOverlay}
+                    handleSignupConfirmation={handleSignupConfirmation}
+                    confirmationLoading={confirmationLoading}
+                    />              
             </VStack>
+            
         </AnimatedColorBox>
     )
 }

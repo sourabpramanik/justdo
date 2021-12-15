@@ -1,12 +1,18 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useContext} from 'react'
 import {VStack, Text, Center, FormControl, Stack, Box} from 'native-base'
 import AnimatedColorBox from '../components/animate-color-box'
 import TitleMastHead from '../components/title-masthead'
 import InputField from '../components/input-field'
 import CustomButton from '../components/custom-button'
+import UserContext from '../context/user'
 
 
 const Signin = (props)=>{
+    const {
+        formState, 
+        setFormState, 
+        handleLogin, 
+        signInLoading} = useContext(UserContext)
     const {navigation} = props
     const handleSignupNavigation = useCallback(()=>{
         navigation.navigate("Signup")
@@ -18,13 +24,17 @@ const Signin = (props)=>{
                     <FormControl isRequired>  
                         <InputField
                             placeholder="Enter your email"
-                            fieldType="email"
-                            name="Email"
+                            type="email"
+                            labelName="Email"
+                            value={formState.email}                            
+                            onChangeText={(value) => setFormState({ ...formState, email: value })}
                         />  
                         <InputField
                             placeholder="Enter your Password"
-                            fieldType="password"
-                            name="Password"
+                            type="password"
+                            labelName="Password" 
+                            value={formState.password}                            
+                            onChangeText={(value) => setFormState({ ...formState, password: value })}
                         />  
                         <Box
                         alignItems="flex-end" 
@@ -35,10 +45,11 @@ const Signin = (props)=>{
                         </Box>                                                
                         <CustomButton
                         bg="blue.500"
-                        isLoading={false}
+                        isLoading={signInLoading}
                         loadingText="Please wait a moment"
                         loadingBg="blue.600:alpha.70"
                         borderRadius="10"
+                        onPress={handleLogin}
                         >
                             Let me in
                         </CustomButton>                                                

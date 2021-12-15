@@ -1,4 +1,4 @@
-import React, {useCallback,useState} from 'react';
+import React, {useCallback,useState, useContext} from 'react';
 import {
     Center,
     VStack,  
@@ -15,6 +15,7 @@ import {Pressable} from 'react-native'
 import shortid from 'shortid'
 import Masthead from '../components/masthead'
 import NavBar from '../components/navbar'
+import UserContext from '../context/user'
 const initialData = [
     {
         id: shortid.generate(),
@@ -35,7 +36,7 @@ const initialData = [
 export default function MainScreen(){
     const [data, setData] = useState(initialData)
     const [editingItemId, setEditingItemId] = useState<string | null>(null)
-
+    const {authUser}  = useContext(UserContext)
     const handleToggleTaskItem = useCallback(item => {
         setData(prevData => {
             const newData = [...prevData]
@@ -79,7 +80,7 @@ export default function MainScreen(){
         bg={useColorModeValue('warmGray.50', 'primary.900')}
         w="full"
         flex={1}>    
-            <Masthead title="What's up!!" image={require('../assets/masthead.png')}>
+            <Masthead title={"What's up!! "+ authUser?.attributes?.name} image={require('../assets/masthead.png')}>
                 <NavBar/>
             </Masthead>        
             <VStack flex={2} space={1}  mt="-20px" borderTopLeftRadius="20px" borderTopRightRadius="20px" pt="20px" bg={useColorModeValue('warmGray.50', 'primary.900')}>

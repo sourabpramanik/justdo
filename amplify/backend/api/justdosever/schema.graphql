@@ -1,0 +1,12 @@
+type TaskItem @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  content: String!
+  userID: ID @index(name: "byUser")
+}
+
+type User @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  name: String!
+  email: String!
+  TaskItems: [TaskItem] @hasMany(indexName: "byUser", fields: ["id"])
+}

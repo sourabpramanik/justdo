@@ -3,15 +3,18 @@ import React from 'react';
 import AppContainer from './src/components/app-container';
 import Navigator from './src/'
 import Amplify from "aws-amplify";
-// import awsExports from "./src/aws-exports";
+import {UserProvider} from './src/context/user'
+import awsExports from "./src/aws-exports";
 
-// Amplify.configure({ ...awsExports, Analytics: { disabled: true, } });
+Amplify.configure({ ...awsExports, Analytics: { disabled: true, } });
 
 function App() {
   return (
-    <AppContainer>
-      <Navigator/>
-    </AppContainer>    
+    <UserProvider>
+      <AppContainer>      
+          <Navigator/>            
+      </AppContainer>
+    </UserProvider>    
   );
 }
 export default App

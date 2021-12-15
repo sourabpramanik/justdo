@@ -114,7 +114,7 @@ export default function AllTasks(props: TaskListProps){
 
     return(
         <StyledScrollView ref={refScrollView} w="full">
-            <AnimatePresence exitBeforeEnter>
+            <AnimatePresence>
                 {data.map(item => (
                     <AnimatedTaskItem 
                     key={item.id} 

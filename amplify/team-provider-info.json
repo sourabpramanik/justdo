@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-justdosever-staging-64457-authRole",
+      "UnauthRoleArn": "arn:aws:iam::570396629000:role/amplify-justdosever-staging-64457-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::570396629000:role/amplify-justdosever-staging-64457-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-justdosever-staging-64457-deployment",
+      "UnauthRoleName": "amplify-justdosever-staging-64457-unauthRole",
+      "StackName": "amplify-justdosever-staging-64457",
+      "StackId": "arn:aws:cloudformation:us-east-1:570396629000:stack/amplify-justdosever-staging-64457/5a88dcb0-5ca9-11ec-80a3-0a1e11ea953d",
+      "AmplifyAppId": "d3vjsj0kq9f2kq"
+    },
+    "categories": {
+      "auth": {
+        "justdosever": {}
+      }
+    }
+  }
+}

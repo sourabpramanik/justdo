@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useState, useContext} from 'react'
 import {Heading, VStack, HStack, Avatar, IconButton, useColorModeValue, Center, Button, Icon} from 'native-base';
 import {DrawerContentComponentProps} from '@react-navigation/drawer'
 import AnimatedColorBox from './animate-color-box'
@@ -7,8 +7,10 @@ import {Feather,AntDesign} from '@expo/vector-icons'
 import MenuButton from './menu-button'
 import {Auth} from "aws-amplify"
 import CustomButton from './custom-button'
+import UserContext from '../context/user'
 const Sidebar=(props: DrawerContentComponentProps)=>{
     const {state, navigation} = props
+    const {setAuthUser, authUser}  = useContext(UserContext)    
     const [isLoggingOut, setLoggingOut] = useState(false)
     const currentRoute = state.routeNames[state.index]
     const handlePressBackButton = useCallback(()=>{
@@ -22,7 +24,9 @@ const Sidebar=(props: DrawerContentComponentProps)=>{
     }, [navigation])
     const handleLogout = useCallback(()=>{
         setLoggingOut(true)
-        Auth.signOut();
+        setAuthUser(null)
+        handlePressBackButton()
+        Auth.signOut();        
     },[Auth])
 
     return(
@@ -42,10 +46,12 @@ const Sidebar=(props: DrawerContentComponentProps)=>{
                     }}
                     />
                 </HStack>
-                <Avatar source={require('../assets/profile.png')} size="xl" mb={6} borderColor="primary.300" borderRadius={100} borderWidth={3}/>
-                <Heading mb={4} size="2xl">
-                    Hey, Sourab
-                </Heading>
+                <HStack justifyContent="center" alignItems="center">
+                    <Avatar source={require('../assets/justdo-logo.png')} size="lg" mb={6}  borderRadius={10}/>
+                    <Heading mb={4} mx="4" size="xl" bold>
+                        JustDo.
+                    </Heading>
+                </HStack>                
                 <MenuButton active={currentRoute==="Main"} onPress={handlePressMenuMain} icon="inbox">
                     To Dos
                 </MenuButton>
@@ -61,9 +67,8 @@ const Sidebar=(props: DrawerContentComponentProps)=>{
                 leftIcon={
                     <Icon as={AntDesign} name="logout" size="sm" opacity={0.5} color="white"/>
                 }       
-                onPress={()=>console.log("logout")
-                } 
-                isLoading={true}
+                onPress={handleLogout} 
+                isLoading={false}
                 loadingBg={useColorModeValue('red.600:alpha.70', 'red.500:alpha.70')}
                 loadingText="Taking you out.."                
                 >

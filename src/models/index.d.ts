@@ -4,7 +4,7 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
-type TodoItemMetaData = {
+type TaskItemMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -12,20 +12,21 @@ type UserMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-export declare class TodoItem {
+export declare class TaskItem {
   readonly id: string;
   readonly content: string;
   readonly userID?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<TodoItem, TodoItemMetaData>);
-  static copyOf(source: TodoItem, mutator: (draft: MutableModel<TodoItem, TodoItemMetaData>) => MutableModel<TodoItem, TodoItemMetaData> | void): TodoItem;
+  constructor(init: ModelInit<TaskItem, TaskItemMetaData>);
+  static copyOf(source: TaskItem, mutator: (draft: MutableModel<TaskItem, TaskItemMetaData>) => MutableModel<TaskItem, TaskItemMetaData> | void): TaskItem;
 }
 
 export declare class User {
   readonly id: string;
   readonly name: string;
-  readonly TodoItems?: (TodoItem | null)[];
+  readonly email: string;
+  readonly TaskItems?: (TaskItem | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<User, UserMetaData>);
