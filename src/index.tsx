@@ -10,9 +10,8 @@ import UserContext from './context/user'
 import {Auth} from 'aws-amplify'
 const Drawer  = createDrawerNavigator()
 
-const App = (props) =>{
+const App = () =>{
     const {authUser} = useContext(UserContext)
-    console.log(props);
     
     useEffect(()=>{
         check()        

@@ -9,11 +9,18 @@
       "UnauthRoleName": "amplify-justdosever-staging-64457-unauthRole",
       "StackName": "amplify-justdosever-staging-64457",
       "StackId": "arn:aws:cloudformation:us-east-1:570396629000:stack/amplify-justdosever-staging-64457/5a88dcb0-5ca9-11ec-80a3-0a1e11ea953d",
-      "AmplifyAppId": "d3vjsj0kq9f2kq"
+      "AmplifyAppId": "d3vjsj0kq9f2kq",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-justdosever-staging-64457-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
         "justdosever": {}
+      },
+      "function": {
+        "justdoseverPostConfirmation": {
+          "deploymentBucketName": "amplify-justdosever-staging-64457-deployment",
+          "s3Key": "amplify-builds/justdoseverPostConfirmation-70775166694e46705852-build.zip"
+        }
       }
     }
   }
