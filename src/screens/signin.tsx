@@ -17,6 +17,9 @@ const Signin = (props)=>{
     const handleSignupNavigation = useCallback(()=>{
         navigation.navigate("Signup")
     },[navigation])
+    const habdlePasswordNavigation = useCallback(()=>{
+        navigation.navigate("ForgotPassword")
+    },[navigation])
     return(
         <AnimatedColorBox flex={1} space={2}>
             <TitleMastHead title="Sign In" subtitle="👋 Hey there! Welcome to JustDo."/>                     
@@ -41,7 +44,7 @@ const Signin = (props)=>{
                         w="full"
                         px={4}
                         >
-                            <Text fontSize={16} color="red.400">Forgot password?</Text>
+                            <Text fontSize={16} color="red.400" onPress={habdlePasswordNavigation}>Forgot password?</Text>
                         </Box>                                                
                         <CustomButton
                         bg="blue.500"

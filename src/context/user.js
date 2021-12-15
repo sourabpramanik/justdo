@@ -19,8 +19,11 @@ const UserProvider = (props)=>{
     const [authUser, setAuthUser] = useState(null)
     const [signUpLoading, setSignUpLoading] = useState(false)
     const [signInLoading, setSignInLoading] = useState(false)
+    const [codeSending, setCodeSending] = useState(false)
+    const [changingPassword, setChangingPassword] = useState(false)
+    const [passwordModal, setPasswordModal] = useState(false)
     const [confirmationLoading, setConfirmationLoading] = useState(false)
-    
+    const [uiState, setUiState] = useState(null)
     const checkUser =async()=>{
         await Auth.currentAuthenticatedUser().then(res=>{
             if (res?.attributes?.sub) {
@@ -87,7 +90,38 @@ const UserProvider = (props)=>{
         }
         
     }
-    console.log(formState)
+    const handlePasswordChange=async()=>{
+        setCodeSending(true)
+        try {
+            await Auth.forgotPassword(email)
+            setPasswordModal(true)
+        } catch (error) {            
+            setPasswordModal(false)
+            setCodeSending(false)
+            console.log(error);
+        }
+    }
+    const handlePasswordModal = useCallback(()=>{
+        setPasswordModal(passwordModal => !passwordModal)
+        setCodeSending(false)
+    },[passwordModal])
+    const handlePasswordSubmit= async()=>{
+        setCodeSending(false)
+        try {
+            await Auth.forgotPasswordSubmit(email, authCode, password).then(res =>{
+                if(res==="SUCCESS"){
+                    setPasswordModal(false)
+                    setFormState(InitialData)   
+                    setUiState('Signin')                 
+                }                
+                else{
+                    setPasswordModal(false)
+                }                
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return(
         <UserContext.Provider value={{
             formState, 
@@ -101,7 +135,15 @@ const UserProvider = (props)=>{
             signUpLoading,
             confirmationLoading,
             handleLogin,
-            signInLoading}}>
+            codeSending,
+            signInLoading,
+            passwordModal,
+            handlePasswordChange,
+            handlePasswordModal,
+            changingPassword,
+            handlePasswordSubmit,
+            uiState
+            }}>
             {children}
         </UserContext.Provider>
     ) 

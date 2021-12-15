@@ -3,7 +3,6 @@ import {HStack, Modal, Text, FormControl} from 'native-base'
 import InputField from './input-field'
 import CustomButton from './custom-button'
 
-
 const AnimatedModal =(props)=>{
     const {formState, setFormState, open, handleModalOverlay, handleSignupConfirmation, confirmationLoading} = props
 
@@ -35,8 +34,7 @@ const AnimatedModal =(props)=>{
                             onPress={handleSignupConfirmation}
                             >
                                 Confirm Email
-                            </CustomButton>
-                            <CustomButton>Confirm Email</CustomButton>
+                            </CustomButton>                    
                         </HStack>
                     </FormControl>
                 </Modal.Body>

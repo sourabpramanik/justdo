@@ -4,6 +4,7 @@ import MainScreen from './screens/main'
 import AboutScreen from './screens/about'
 import Signin from './screens/signin'
 import SignUp from './screens/signup'
+import ForgotPassword from './screens/forgotPassword'
 import Sidebar from './components/sidebar'
 import UserContext from './context/user'
 import {Auth} from 'aws-amplify'
@@ -37,6 +38,7 @@ const App = (props) =>{
                 <>
                     <Drawer.Screen name="Signin" component={Signin} />
                     <Drawer.Screen name="Signup" component={SignUp} />                    
+                    <Drawer.Screen name="ForgotPassword" component={ForgotPassword} />                    
                 </>
                 :
                 <>

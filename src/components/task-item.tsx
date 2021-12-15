@@ -60,7 +60,7 @@ const TaskItem = (props: Props)=>{
             simultaneousHandlers={simultaneousHandlers} 
             onSwipe={onRemove} 
             backView={
-                <Box w="full" h="full" bg="red.500" alignItems="flex-end" justifyContent="center" pr={4}>
+                <Box w="full" py={2} bg="red.500" alignItems="flex-end" justifyContent="center" pr={4} borderRadius={10}>
                     <Icon color="white" as={<Feather name="trash-2"/>} size="sm"/>
                 </Box>
             }
@@ -69,7 +69,7 @@ const TaskItem = (props: Props)=>{
             alignItems="center" 
             w="full" 
             px={4} 
-            py={2}
+            py={2.5}
             bg={useColorModeValue('warmGray.50', 'primary.900')}
             >
                 <Box width={30} height={30} mr={2}>
