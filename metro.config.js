@@ -1,12 +1,13 @@
 module.exports = {
   resolver: {
-    blacklistRE: /#current-cloud-backend\/.*/  },
+    blacklistRE: /#current-cloud-backend\/.*/
+  },
   transformer: {
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
-        inlineRequires: false,
-      },
-    }),
-  },
-};
+        inlineRequires: false
+      }
+    })
+  }
+}

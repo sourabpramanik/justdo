@@ -3,7 +3,7 @@ import { HStack, IconButton, useColorMode } from "native-base"
 import { Feather, Ionicons } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { DrawerNavigationProp } from "@react-navigation/drawer"
-
+import { StatusBar } from "react-native"
 const NavBar = () => {
   const navigation = useNavigation<DrawerNavigationProp<{}>>()
   const handlePressMenuButton = useCallback(() => {
@@ -12,7 +12,13 @@ const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode()
 
   return (
-    <HStack w="full" h={40} alignItems="center" justifyContent="space-between">
+    <HStack
+      w="full"
+      mt={StatusBar.currentHeight}
+      mb="10"
+      alignItems="center"
+      justifyContent="space-between"
+    >
       <IconButton
         onPress={handlePressMenuButton}
         borderRadius={100}

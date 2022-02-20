@@ -1,19 +1,15 @@
 import React, { useCallback, useState, useContext, useEffect } from "react"
-import { Center, VStack, useColorModeValue, Fab, Icon } from "native-base"
+import { Center, VStack, useColorModeValue, Fab, Icon, Box } from "native-base"
 import { AntDesign } from "@expo/vector-icons"
 import AnimatedCheckbox from "../components/animated-checkbox"
 import TaskItem from "../components/task-item"
 import AllTasks from "../components/all-tasks"
 import AnimatedColorBox from "../components/animate-color-box"
-import { Pressable } from "react-native"
 import shortid from "shortid"
-import Masthead from "../components/masthead"
-import NavBar from "../components/navbar"
 import UserContext from "../context/user"
 import TaskContext from "../context/task"
 
 export default function MainScreen() {
-  // const [data, setTaskItem] = useState(initialData)
   const [editingItemId, setEditingItemId] = useState<string | null>(null)
   const { authUser } = useContext(UserContext)
   const { taskItem, setTaskItem, queryData, handleCreateTask } =
@@ -65,16 +61,7 @@ export default function MainScreen() {
       w="full"
       flex={1}
     >
-      <Masthead />
-      <VStack
-        flex={2}
-        space={1}
-        mt="-20px"
-        borderTopLeftRadius="20px"
-        borderTopRightRadius="20px"
-        pt="20px"
-        bg={useColorModeValue("warmGray.50", "primary.900")}
-      >
+      <VStack flex={1} space={1}>
         <AllTasks
           data={taskItem}
           onToggleItem={handleToggleTaskItem}

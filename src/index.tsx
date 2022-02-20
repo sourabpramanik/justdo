@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react"
 import { createDrawerNavigator } from "@react-navigation/drawer"
-import MainScreen from "./screens/main"
+import HomeScreen from "./screens/home"
 import AboutScreen from "./screens/about"
 import Signin from "./screens/signin"
 import SignUp from "./screens/signup"
@@ -8,6 +8,7 @@ import ForgotPassword from "./screens/forgotPassword"
 import Sidebar from "./components/sidebar"
 import UserContext from "./context/user"
 import { Auth } from "aws-amplify"
+
 const Drawer = createDrawerNavigator()
 
 const App = () => {
@@ -41,7 +42,7 @@ const App = () => {
         </>
       ) : (
         <>
-          <Drawer.Screen name="Main" component={MainScreen} />
+          <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="About" component={AboutScreen} />
         </>
       )}
