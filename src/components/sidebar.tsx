@@ -19,7 +19,7 @@ import CustomButton from "./custom-button"
 import UserContext from "../context/user"
 const Sidebar = (props: DrawerContentComponentProps) => {
   const { state, navigation } = props
-  const { setAuthUser, authUser } = useContext(UserContext)
+  const { setAuthUser } = useContext(UserContext)
   const [isLoggingOut, setLoggingOut] = useState(false)
   const currentRoute = state.routeNames[state.index]
   const handlePressBackButton = useCallback(() => {
@@ -84,6 +84,12 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           icon="info"
         >
           About
+        </MenuButton>
+        <MenuButton>
+          Work Boards
+        </MenuButton>
+        <MenuButton>
+          Calendar
         </MenuButton>
       </VStack>
       <Center>

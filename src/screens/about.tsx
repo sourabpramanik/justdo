@@ -73,21 +73,6 @@ function AboutScreen() {
           >
             @jaydeeprao_
           </LinkButton>
-          {/* <Text fontSize="md" w="full">
-            Are you looking for a Markdown note-taking app? Check out my app
-            called Inkdrop!
-          </Text>
-          <LinkButton
-            colorScheme="purple"
-            size="lg"
-            borderRadius="full"
-            href="https://www.inkdrop.app/"
-            leftIcon={
-              <Icon as={Feather} name="external-link" size="sm" opacity={0.5} />
-            }
-          >
-            https://www.inkdrop.app/
-          </LinkButton> */}
         </VStack>
       </ScrollView>
     </AnimatedColorBox>      

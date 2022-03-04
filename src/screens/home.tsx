@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Masthead from "../components/masthead"
 import MainScreen from "./main"
-import AboutScreen from "./about"
+import WorkBoard from "./work-board"
 import { TabView, SceneMap } from "react-native-tab-view"
 import NavBar from "../components/navbar"
 import AnimatedColorBox from "../components/animate-color-box"
@@ -24,7 +24,7 @@ import {
 
 const FirstRoute = () => <MainScreen />
 
-const SecondRoute = () => <Text>Work</Text>
+const SecondRoute = () => <WorkBoard />
 
 const initialLayout = {
   width: Dimensions.get("window").width
@@ -80,8 +80,8 @@ export default function HomeScreen() {
               >
                 <Box
                   alignItems="center"
-                  p="3"
-                  m="3"
+                  p="2"
+                  m="2"
                   bg={bgColor}
                   borderRadius={border}
                   shadow={boxShadow}

@@ -16,6 +16,8 @@ const NavBar = () => {
       w="full"
       mt={StatusBar.currentHeight}
       mb="10"
+      px={4}
+      pt={4}
       alignItems="center"
       justifyContent="space-between"
     >
@@ -34,7 +36,7 @@ const NavBar = () => {
         borderRadius={100}
         _icon={{
           as: Ionicons,
-          name: colorMode === "light" ? "sunny-outline" : "ios-moon-outline",
+          name: colorMode === "light" ? "sunny-outline" : "ios-moon",
           size: 6,
           color: "blue.500"
         }}
