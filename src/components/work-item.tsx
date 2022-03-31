@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function WorkItem(props: Props) {
-  const { label } = props;
+  const { label } = props
 
   return (
     <HStack
@@ -16,7 +16,7 @@ export default function WorkItem(props: Props) {
       w="full"
       px={3}
       py={3}
-      m={3}
+      my={3}
       bg={useColorModeValue("blue.100", "darkBlue.800")}
       borderRadius={10}
     >

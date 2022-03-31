@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from "react"
 import { VStack, Text, useColorModeValue } from "native-base"
-import { View, FlatList } from "react-native"
+import { View, FlatList, Pressable } from "react-native"
 import AnimatedColorBox from "../components/animate-color-box"
 import WorkItem from "../components/work-item"
-import { Animated } from 'react-native';
+import { Animated } from "react-native"
+import { useNavigation } from "@react-navigation/native"
 
 const workItemData = [
   {
@@ -39,14 +40,23 @@ const workItemData = [
     label: "Project 8"
   }
 ]
-const SPACING = 20;
-const ITEM_SIZE = 60 + SPACING * 3;
+const SPACING = 20
+const ITEM_SIZE = 60 + SPACING * 3
 
 export default function WorkBoard() {
-  const scrollY = useRef(new Animated.Value(0)).current;
+  const scrollY = useRef(new Animated.Value(0)).current
+  const navigation = useNavigation()
 
+  const handleNavigation = useCallback(item => {
+    navigation.navigate("WorkSpace", { item })
+  })
   return (
-    <VStack bg={useColorModeValue("warmGray.50", "primary.900")} flex={1} w="full" justifyContent="center">
+    <VStack
+      bg={useColorModeValue("warmGray.50", "primary.900")}
+      flex={1}
+      w="full"
+      justifyContent="center"
+    >
       <Animated.FlatList
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -56,15 +66,10 @@ export default function WorkBoard() {
         keyExtractor={item => item.id}
         contentContainerStyle={{
           padding: SPACING,
-          justifyContent: 'center',
+          justifyContent: "center"
         }}
         renderItem={({ item, index }) => {
-          const inputRange = [
-            -1,
-            0,
-            ITEM_SIZE * index,
-            ITEM_SIZE * (index + 2)
-          ]
+          const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)]
 
           const scale = scrollY.interpolate({
             inputRange,
@@ -72,9 +77,17 @@ export default function WorkBoard() {
           })
 
           return (
-            <Animated.View style={{ justifyContent: "center", transform: [{ scale }] }}>
-              <WorkItem label={item.label} />
-            </Animated.View>
+            <Pressable
+              onPress={() => {
+                handleNavigation(item.label)
+              }}
+            >
+              <Animated.View
+                style={{ justifyContent: "center", transform: [{ scale }] }}
+              >
+                <WorkItem label={item.label} />
+              </Animated.View>
+            </Pressable>
           )
         }}
       />

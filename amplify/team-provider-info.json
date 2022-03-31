@@ -13,14 +13,14 @@
       "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-justdosever-staging-64457-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
-      "auth": {
-        "justdosever": {}
-      },
       "function": {
         "justdoseverPostConfirmation": {
           "deploymentBucketName": "amplify-justdosever-staging-64457-deployment",
           "s3Key": "amplify-builds/justdoseverPostConfirmation-70775166694e46705852-build.zip"
         }
+      },
+      "auth": {
+        "justdosever": {}
       }
     }
   }
