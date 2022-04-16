@@ -14,10 +14,9 @@ const NavBar = () => {
   return (
     <HStack
       w="full"
-      mt={StatusBar.currentHeight}
+      mt={StatusBar.currentHeight - 30}
       mb="10"
       px={4}
-      pt={4}
       alignItems="center"
       justifyContent="space-between"
     >

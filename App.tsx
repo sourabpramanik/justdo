@@ -5,6 +5,7 @@ import Navigator from "./src/"
 import Amplify from "aws-amplify"
 import { UserProvider } from "./src/context/user"
 import { TaskProvider } from "./src/context/task"
+import { WorkProvider } from "./src/context/work"
 import awsExports from "./src/aws-exports"
 import { LogBox } from "react-native"
 import _ from "lodash"
@@ -24,18 +25,14 @@ function App() {
 
   return (
     <UserProvider>
-      <TaskProvider>
-        <StatusBar
-          animated={true}
-          backgroundColor={useColorModeValue("blue.100", "darkBlue.800")}
-          // barStyle={statusBarStyle}
-          // showHideTransition="slide"
-          // hidden={true}
-        />
-        <AppContainer>
-          <Navigator />
-        </AppContainer>
-      </TaskProvider>
+      <WorkProvider>
+        <TaskProvider>
+          <StatusBar animated={true} showHideTransition="slide" hidden={true} />
+          <AppContainer>
+            <Navigator />
+          </AppContainer>
+        </TaskProvider>
+      </WorkProvider>
     </UserProvider>
   )
 }

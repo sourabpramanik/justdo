@@ -31,6 +31,9 @@ const Sidebar = (props: DrawerContentComponentProps) => {
   const handlePressMenuAbout = useCallback(() => {
     navigation.navigate("About")
   }, [navigation])
+  const handlePressMenuCalendar = useCallback(() => {
+    navigation.navigate("Calendar")
+  }, [navigation])
   const handleLogout = useCallback(() => {
     setLoggingOut(true)
     setAuthUser(null)
@@ -74,9 +77,23 @@ const Sidebar = (props: DrawerContentComponentProps) => {
         <MenuButton
           active={currentRoute === "Main"}
           onPress={handlePressMenuMain}
-          icon="inbox"
+          icon="home"
         >
-          To Dos
+          Home
+        </MenuButton>
+        <MenuButton
+          active={currentRoute === "Notes"}
+          // onPress={handlePressMenuAbout}
+          icon="edit-3"
+        >
+          Notes
+        </MenuButton>
+        <MenuButton
+          active={currentRoute === "Calendar"}
+          onPress={handlePressMenuCalendar}
+          icon="calendar"
+        >
+          Calendar
         </MenuButton>
         <MenuButton
           active={currentRoute === "About"}
@@ -84,12 +101,6 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           icon="info"
         >
           About
-        </MenuButton>
-        <MenuButton>
-          Work Boards
-        </MenuButton>
-        <MenuButton>
-          Calendar
         </MenuButton>
       </VStack>
       <Center>

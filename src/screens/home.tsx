@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Masthead from "../components/masthead"
 import MainScreen from "./main"
-import WorkBoard from "./work-board"
+import AllNotes from "./all-notes"
 import { TabView, SceneMap } from "react-native-tab-view"
 import NavBar from "../components/navbar"
 import AnimatedColorBox from "../components/animate-color-box"
@@ -24,7 +24,7 @@ import {
 
 const FirstRoute = () => <MainScreen />
 
-const SecondRoute = () => <WorkBoard />
+const SecondRoute = () => <AllNotes />
 
 const initialLayout = {
   width: Dimensions.get("window").width
@@ -39,11 +39,11 @@ export default function HomeScreen() {
   const [routes] = useState([
     {
       key: "first",
-      title: "Today's"
+      title: "Tasks"
     },
     {
       key: "second",
-      title: "Work Board"
+      title: "Notes"
     }
   ])
   function TabBar(props) {

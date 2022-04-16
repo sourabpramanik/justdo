@@ -1,13 +1,24 @@
 import React from "react"
-import { HStack, Text, useColorModeValue, IconButton } from "native-base"
+import {
+  HStack,
+  Text,
+  useColorModeValue,
+  IconButton,
+  useTheme
+} from "native-base"
 import { EvilIcons } from "@expo/vector-icons"
 
 interface Props {
-  label: string
+  isEditing: boolean
+  onLongPressTitle?: () => void
+  onPressTitle?: () => void
+  onRemove?: () => void
+  onTitleChange?: (title: string) => void
+  title: string
 }
 
-export default function WorkItem(props: Props) {
-  const { label } = props
+export default function NoteItem(props: Props) {
+  const { title } = props
 
   return (
     <HStack
@@ -25,7 +36,7 @@ export default function WorkItem(props: Props) {
         fontWeight="bold"
         color={useColorModeValue("darkBlue.500", "white")}
       >
-        {label}
+        {title}
       </Text>
       <IconButton
         // onPress={handlePressMenuButton}
