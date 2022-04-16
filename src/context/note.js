@@ -1,44 +1,45 @@
 import React, { useState, useEffect } from "react"
 
-const WorkContext = React.createContext()
+const NoteContext = React.createContext()
+import shortid from "shortid"
 
-const initialWorkItem = [
+const initialNoteItem = [
   {
-    id: "1dsadas",
+    id: shortid.generate(),
     title: "Project One",
     desc: "dssdasdas",
     createdAt: "2000-10-31T01:30:00.000-05:00"
   }
 ]
 
-const WorkProvider = props => {
-  const [workItem, setWorkItem] = useState(initialWorkItem)
-  const { id, title, desc, done } = workItem
+const NoteProvider = props => {
+  const [noteItem, setNoteItem] = useState(initialNoteItem)
+  const { id, title, desc, done } = noteItem
 
   const handleCreateWork = async props => {
     const id = shortid.generate()
-    setWorkItem([
+    setNoteItem([
       {
         id,
         title: props.title,
         desc: props.desc,
         createdAt: new Date().toISOString()
       },
-      ...workItem
+      ...noteItem
     ])
   }
 
   return (
-    <WorkContext.Provider
+    <NoteContext.Provider
       value={{
-        workItem,
-        setWorkItem,
+        noteItem,
+        setNoteItem,
         handleCreateWork
       }}
     >
       {props.children}
-    </WorkContext.Provider>
+    </NoteContext.Provider>
   )
 }
-export default WorkContext
-export { WorkProvider }
+export default NoteContext
+export { NoteProvider }

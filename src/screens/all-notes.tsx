@@ -6,43 +6,9 @@ import NoteItem from "../components/note-item"
 import { Animated } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { AntDesign } from "@expo/vector-icons"
-import WorkContext from "../context/work"
+import NoteContext from "../context/note"
 import shortid from "shortid"
 
-const workItemData = [
-  {
-    id: 1,
-    label: "Zeus Project"
-  },
-  {
-    id: 2,
-    label: "Client Project"
-  },
-  {
-    id: 3,
-    label: "Project 3"
-  },
-  {
-    id: 4,
-    label: "Project 4"
-  },
-  {
-    id: 5,
-    label: "Project 5"
-  },
-  {
-    id: 6,
-    label: "Project 6"
-  },
-  {
-    id: 7,
-    label: "Project 7"
-  },
-  {
-    id: 8,
-    label: "Project 8"
-  }
-]
 const SPACING = 20
 const ITEM_SIZE = 60 + SPACING * 3
 
@@ -50,11 +16,12 @@ export default function AllNotes() {
   const [editingItemId, setEditingItemId] = useState<string | null>(null)
   const scrollY = useRef(new Animated.Value(0)).current
   const navigation = useNavigation()
-  const { workItem, setWorkItem } = useContext(WorkContext)
+  const { noteItem, setNoteItem } = useContext(NoteContext)
 
   const handleNavigation = useCallback(item => {
     navigation.navigate("NotesScreen", { item })
   })
+
   return (
     <AnimatedColorBox flex={1}>
       <VStack
@@ -68,7 +35,7 @@ export default function AllNotes() {
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
             { useNativeDriver: true }
           )}
-          data={workItem}
+          data={noteItem}
           keyExtractor={item => item.id}
           contentContainerStyle={{
             padding: SPACING,
@@ -112,14 +79,14 @@ export default function AllNotes() {
         bg={useColorModeValue("blue.500", "blue.400")}
         onPress={() => {
           const id = shortid.generate()
-          setWorkItem([
+          setNoteItem([
             {
               id,
               title: "Untitled",
               desc: "Just Do is a productivity app designed for both IOS and Android. Happy working.",
               createdAt: new Date().toISOString()
             },
-            ...workItem
+            ...noteItem
           ])
           setEditingItemId(id)
         }}

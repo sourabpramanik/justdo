@@ -17,7 +17,6 @@
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/material-top-tabs": "^6.1.1",
     "@react-navigation/native": "^6.0.6",
-    "@rivascva/react-native-code-editor": "^1.2.0",
     "@types/shortid": "^0.0.29",
     "aws-amplify": "^4.3.16",
     "aws-amplify-react-native": "^6.0.1",

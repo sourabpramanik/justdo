@@ -5,7 +5,7 @@ import Navigator from "./src/"
 import Amplify from "aws-amplify"
 import { UserProvider } from "./src/context/user"
 import { TaskProvider } from "./src/context/task"
-import { WorkProvider } from "./src/context/work"
+import { NoteProvider } from "./src/context/note"
 import awsExports from "./src/aws-exports"
 import { LogBox } from "react-native"
 import _ from "lodash"
@@ -25,14 +25,14 @@ function App() {
 
   return (
     <UserProvider>
-      <WorkProvider>
+      <NoteProvider>
         <TaskProvider>
           <StatusBar animated={true} showHideTransition="slide" hidden={true} />
           <AppContainer>
             <Navigator />
           </AppContainer>
         </TaskProvider>
-      </WorkProvider>
+      </NoteProvider>
     </UserProvider>
   )
 }
