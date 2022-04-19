@@ -2,6 +2,8 @@ import { extendTheme } from "native-base"
 import { Appearance } from "react-native"
 
 const systemColorScheme = Appearance.getColorScheme()
+console.log("systemColorScheme", systemColorScheme)
+
 const config = {
   useSystemColorMode: false,
   initialColorMode: systemColorScheme

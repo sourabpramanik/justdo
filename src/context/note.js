@@ -1,32 +1,87 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback, useContext } from "react"
+import { DataStore } from "@aws-amplify/datastore"
+import { NoteItem } from "../models"
+import UserContext from "./user"
 
 const NoteContext = React.createContext()
-import shortid from "shortid"
 
 const initialNoteItem = [
   {
-    id: shortid.generate(),
-    title: "Project One",
-    desc: "dssdasdas",
-    createdAt: "2000-10-31T01:30:00.000-05:00"
+    id: "",
+    title: "",
+    desc: "",
+    userId: ""
   }
 ]
 
 const NoteProvider = props => {
   const [noteItem, setNoteItem] = useState(initialNoteItem)
   const { id, title, desc, done } = noteItem
+  const { authUser } = useContext(UserContext)
 
-  const handleCreateWork = async props => {
-    const id = shortid.generate()
-    setNoteItem([
-      {
-        id,
+  useEffect(() => {
+    const subscription = DataStore.observe(NoteItem).subscribe(c =>
+      // setNoteItem(c.userID("contains", authUser?.attributes?.sub))
+      setNoteItem(prevData => {
+        const newData = [...prevData]
+        const index = newData.findIndex(item => item.id === c.element.id)
+        if (index !== -1) {
+          newData[index] = c.element
+        }
+        return newData
+      })
+    )
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const queryData = async props => {
+    try {
+      const models = await DataStore.query(NoteItem, c =>
+        c.userID("contains", props?.attributes?.sub)
+      )
+      setNoteItem(models)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleCreateNote = async props => {
+    // console.log(props)
+    await DataStore.save(
+      new NoteItem({
         title: props.title,
         desc: props.desc,
-        createdAt: new Date().toISOString()
-      },
-      ...noteItem
-    ])
+        userID: props.userId
+      })
+    )
+  }
+
+  const handleDeleteNote = async props => {
+    const item = await DataStore.query(NoteItem, props.id)
+    DataStore.delete(item)
+  }
+
+  const handleTitleChange = async props => {
+    const item = await DataStore.query(NoteItem, props.id)
+    if (item) {
+      await DataStore.save(
+        NoteItem.copyOf(item, updated => {
+          updated.title = props.title
+        })
+      )
+    }
+  }
+
+  const handleDescChange = async props => {
+    const item = await DataStore.query(NoteItem, props.id)
+    if (item) {
+      await DataStore.save(
+        NoteItem.copyOf(item, updated => {
+          updated.desc = props.desc
+        })
+      )
+    }
   }
 
   return (
@@ -34,7 +89,13 @@ const NoteProvider = props => {
       value={{
         noteItem,
         setNoteItem,
-        handleCreateWork
+
+        queryData,
+
+        handleCreateNote,
+        handleDeleteNote,
+        handleTitleChange,
+        handleDescChange
       }}
     >
       {props.children}

@@ -1,26 +1,39 @@
-import React, { useRef, useCallback, useContext, useState } from "react"
+import React, {
+  useRef,
+  useCallback,
+  useContext,
+  useState,
+  useEffect
+} from "react"
 import { VStack, Text, useColorModeValue, Fab, Icon } from "native-base"
 import { View, FlatList, Pressable } from "react-native"
-import AnimatedColorBox from "../components/animate-color-box"
-import NoteItem from "../components/note-item"
+import AnimatedColorBox from "../../components/animate-color-box"
+import NoteItem from "../../components/note-item"
 import { Animated } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { AntDesign } from "@expo/vector-icons"
-import NoteContext from "../context/note"
+import UserContext from "../../context/user"
+import NoteContext from "../../context/note"
 import shortid from "shortid"
 
 const SPACING = 20
 const ITEM_SIZE = 60 + SPACING * 3
 
-export default function AllNotes() {
-  const [editingItemId, setEditingItemId] = useState<string | null>(null)
+export default function NotesPanel() {
   const scrollY = useRef(new Animated.Value(0)).current
   const navigation = useNavigation()
-  const { noteItem, setNoteItem } = useContext(NoteContext)
-
-  const handleNavigation = useCallback(item => {
-    navigation.navigate("NotesScreen", { item })
+  const { authUser } = useContext(UserContext)
+  const { noteItem, setNoteItem, queryData, handleCreateNote } =
+    useContext(NoteContext)
+  const [open, setOpen] = useState(false)
+  const [modalData, setModalData] = useState({
+    title: "",
+    desc: ""
   })
+
+  useEffect(() => {
+    queryData(authUser)
+  }, [])
 
   return (
     <AnimatedColorBox flex={1}>
@@ -56,9 +69,8 @@ export default function AllNotes() {
 
             return (
               <Pressable
-                onPress={() => {
-                  handleNavigation(item)
-                }}
+                key={item.id}
+                onPress={() => navigation.navigate("Note", { id: item.id })}
               >
                 <Animated.View
                   style={{ justifyContent: "center", transform: [{ scale }] }}
@@ -77,19 +89,13 @@ export default function AllNotes() {
         icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
         colorScheme={useColorModeValue("blue", "darkBlue")}
         bg={useColorModeValue("blue.500", "blue.400")}
-        onPress={() => {
-          const id = shortid.generate()
-          setNoteItem([
-            {
-              id,
-              title: "Untitled",
-              desc: "Just Do is a productivity app designed for both IOS and Android. Happy working.",
-              createdAt: new Date().toISOString()
-            },
-            ...noteItem
-          ])
-          setEditingItemId(id)
-        }}
+        onPress={() =>
+          handleCreateNote({
+            title: "Untitled",
+            desc: "Just Do is a productivity app designed for both IOS and Android. Happy working.",
+            userId: authUser?.attributes?.sub
+          })
+        }
       />
     </AnimatedColorBox>
   )

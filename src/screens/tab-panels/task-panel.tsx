@@ -1,18 +1,17 @@
 import React, { useCallback, useState, useContext, useEffect } from "react"
 import { Center, VStack, useColorModeValue, Fab, Icon, Box } from "native-base"
 import { AntDesign } from "@expo/vector-icons"
-import AnimatedCheckbox from "../components/animated-checkbox"
-import AllTasks from "../components/all-tasks"
-import AnimatedColorBox from "../components/animate-color-box"
+import AnimatedCheckbox from "../../components/animated-checkbox"
+import AllTasks from "../../components/all-tasks"
+import AnimatedColorBox from "../../components/animate-color-box"
 import shortid from "shortid"
-import UserContext from "../context/user"
-import TaskContext from "../context/task"
+import UserContext from "../../context/user"
+import TaskContext from "../../context/task"
 
-export default function MainScreen() {
+export default function TaskPanel() {
   const [editingItemId, setEditingItemId] = useState<string | null>(null)
   const { authUser } = useContext(UserContext)
-  const { taskItem, setTaskItem, queryData, handleCreateTask } =
-    useContext(TaskContext)
+  const { taskItem, setTaskItem, queryData } = useContext(TaskContext)
   useEffect(() => {
     queryData(authUser)
   }, [])

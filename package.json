@@ -10,7 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.15.14",
+    "@react-native-async-storage/async-storage": "^1.17.3",
     "@react-native-community/hooks": "^2.8.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/netinfo": "6.0.2",
@@ -30,6 +30,7 @@
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
     "react-native-calendars": "^1.1282.0",
+    "react-native-cn-quill": "^0.7.15",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-htmlview": "^0.16.0",
     "react-native-pager-view": "5.4.6",

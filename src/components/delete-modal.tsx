@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import {
   VStack,
   HStack,
@@ -11,16 +11,29 @@ import {
 } from "native-base"
 import { Foundation } from "@expo/vector-icons"
 
-interface Props {
-  open: boolean
-  handleDeleteModal: () => void
+interface Note {
+  id: string
   title: string
+  desc: string
 }
 
-const DeleteModal = props => {
-  const { open, handleDeleteModal, title } = props
+interface Props {
+  item: Note
+  open: boolean
+  onShowDeleteModal: () => void
+  onDeleteNote: (id: string) => void
+}
+
+const DeleteModal = (props: Props) => {
+  const { open, onShowDeleteModal, item, onDeleteNote } = props
+  const { id, title } = item
+
+  const handleRemove = useCallback(() => {
+    onDeleteNote && onDeleteNote(id)
+  }, [onDeleteNote, id])
+
   return (
-    <Modal isOpen={open} size="xl" onClose={handleDeleteModal}>
+    <Modal isOpen={open} size="xl" onClose={onShowDeleteModal}>
       <Modal.Content maxWidth="450">
         <Modal.Body>
           <FormControl>
@@ -46,7 +59,7 @@ const DeleteModal = props => {
                 loadingText="Please wait a moment"
                 loadingBg="blue.600:alpha.70"
                 borderRadius="10"
-                // onPress={handleSignupConfirmation}
+                onPress={handleRemove}
               >
                 <Text fontSize={18} color="white">
                   Confirm
@@ -58,7 +71,7 @@ const DeleteModal = props => {
                 loadingText="Please wait a moment"
                 loadingBg="blue.600:alpha.70"
                 borderRadius="10"
-                onPress={handleDeleteModal}
+                onPress={onShowDeleteModal}
               >
                 <Text fontSize={18}>Cancel</Text>
               </Button>

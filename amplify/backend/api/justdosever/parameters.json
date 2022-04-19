@@ -2,10 +2,6 @@
   "AppSyncApiName": "justdosever",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
-  "AuthCognitoUserPoolId": {
-    "Fn::GetAtt": [
-      "authjustdosever",
-      "Outputs.UserPoolId"
-    ]
-  }
+  "CreateAPIKey": 1,
+  "AuthModeLastUpdated": "2022-04-16T13:27:16.034Z"
 }

@@ -5,37 +5,59 @@ import {
   useColorModeValue,
   Icon,
   Input,
-  IconButton
+  IconButton,
+  Heading
 } from "native-base"
 import { AntDesign, Feather, SimpleLineIcons } from "@expo/vector-icons"
+import AnimatedTaskLabel from "./animated-tasklabel"
+
+interface NoteData {
+  id: string
+  title: string
+  desc: string
+}
 
 interface Props {
-  item: any
+  item: NoteData
   editMode: boolean
   copied: boolean
-  handleBackNavigation: () => void
-  handleEditModeChange: () => void
-  handleDeleteModal: () => void
-  handleCopyNotes: () => void
-  onTitleChange: (item: any, newTitle: string) => void
+  isEditing: boolean
+  onNavigateback: () => void
+  onEditModeChange: () => void
+  onDeleteModal: () => void
+  onCopyNote: (title: string, desc: string) => void
+  onTitleUpdate: (title: string) => void
+  onFinishEditingTitle: () => void
+  onPressNoteItemTitle: (item: NoteData) => void
 }
-const NoteTitleBar = props => {
+const NoteTitleBar = (props: Props) => {
   const {
     item,
     editMode,
     copied,
-    handleBackNavigation,
-    handleEditModeChange,
-    handleDeleteModal,
-    handleCopyNotes,
-    onTitleChange
+    isEditing,
+    onNavigateback,
+    onEditModeChange,
+    onShowDeleteModal,
+    onCopyNote,
+    onTitleUpdate,
+    onFinishEditingTitle,
+    onPressNoteItemTitle
   } = props
 
+  const handleCopyNote = useCallback(() => {
+    onCopyNote && onCopyNote(item)
+  }, [onCopyNote, item])
+
+  const handlePressTitle = useCallback(() => {
+    onPressNoteItemTitle(item)
+  }, [item, onPressNoteItemTitle])
+
   const handleTitleUpdate = useCallback(
-    (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-      onTitleChange && onTitleChange(e.nativeEvent.text)
+    (e: NativeSyntheticEvent<TextInputChangeEventitem>) => {
+      onTitleUpdate && onTitleUpdate(e.nativeEvent.text)
     },
-    [onTitleChange]
+    [onTitleUpdate]
   )
 
   return (
@@ -48,19 +70,42 @@ const NoteTitleBar = props => {
             size: 4,
             color: useColorModeValue("blue.500", "blue.400")
           }}
-          onPress={handleBackNavigation}
+          onPress={onNavigateback}
         />
-        <Input
-          value={item.title}
-          variant="unstyled"
-          px={1}
-          py={0}
-          color={useColorModeValue("blue.500", "blue.400")}
-          my="5"
-          fontSize="2xl"
-          fontWeight="bold"
-          onChange={handleTitleUpdate}
-        />
+        {isEditing ? (
+          <Input
+            value={item.title}
+            // variant="outlined"
+            underline={false}
+            truncated
+            maxW="200"
+            px={1}
+            py={0}
+            color={useColorModeValue("blue.500", "blue.400")}
+            my="5"
+            fontSize="2xl"
+            fontWeight="bold"
+            autoFocus
+            blurOnSubmit
+            onChange={handleTitleUpdate}
+            onBlur={onFinishEditingTitle}
+            borderRadius={4}
+          />
+        ) : (
+          <Heading
+            truncated
+            maxW="200"
+            color={useColorModeValue("blue.500", "blue.400")}
+            onPress={handlePressTitle}
+            px={1}
+            py={0}
+            my="5"
+            fontSize="2xl"
+            fontWeight="bold"
+          >
+            {item.title}
+          </Heading>
+        )}
       </Flex>
       <Flex direction="row" alignItems="center" justifyContent="space-between">
         <IconButton
@@ -70,7 +115,7 @@ const NoteTitleBar = props => {
             size: 6,
             color: useColorModeValue("blue.500", "blue.400")
           }}
-          onPress={() => handleEditModeChange()}
+          onPress={() => onEditModeChange()}
         />
         <IconButton
           _icon={{
@@ -79,7 +124,7 @@ const NoteTitleBar = props => {
             size: 6,
             color: useColorModeValue("blue.500", "blue.400")
           }}
-          onPress={handleDeleteModal}
+          onPress={onShowDeleteModal}
         />
         <IconButton
           _icon={
@@ -97,7 +142,7 @@ const NoteTitleBar = props => {
                   color: useColorModeValue("blue.500", "blue.400")
                 }
           }
-          onPress={handleCopyNotes}
+          onPress={handleCopyNote}
         />
       </Flex>
     </Flex>

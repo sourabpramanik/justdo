@@ -1,16 +1,26 @@
-import React, { useCallback, useContext } from "react"
-import { VStack, Text, Center, FormControl, Stack, Box } from "native-base"
+import React, { useCallback, useContext, useState } from "react"
+import {
+  VStack,
+  Text,
+  Center,
+  FormControl,
+  Stack,
+  Box,
+  Icon
+} from "native-base"
 import AnimatedColorBox from "../components/animate-color-box"
 import TitleMastHead from "../components/title-masthead"
 import InputField from "../components/input-field"
 import CustomButton from "../components/custom-button"
 import AlertPopUp from "../components/alert-popups"
 import UserContext from "../context/user"
+import { MaterialIcons } from "@expo/vector-icons"
 
 const Signin = props => {
   const { formState, setFormState, handleLogin, signInLoading, valid } =
     useContext(UserContext)
   const { navigation } = props
+  const [showPassword, setShowPassword] = useState(false)
   const handleSignupNavigation = useCallback(() => {
     navigation.navigate("Signup")
   }, [navigation])
@@ -44,11 +54,24 @@ const Signin = props => {
           />
           <InputField
             placeholder="Enter your Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             labelName="Password"
             value={formState.password}
             onChangeText={value =>
               setFormState({ ...formState, password: value })
+            }
+            InputRightElement={
+              <Icon
+                as={
+                  <MaterialIcons
+                    name={showPassword ? "visibility" : "visibility-off"}
+                  />
+                }
+                mr="2"
+                size={6}
+                color={showPassword ? "blue.400" : "muted.400"}
+                onPress={() => setShowPassword(!showPassword)}
+              />
             }
           />
           <Box alignItems="flex-end" w="full" px={4}>

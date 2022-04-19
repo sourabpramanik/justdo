@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "justdosever",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-4aa08f52-c0cf-426c-a38d-ea9d418defd7/amplify/backend/api/justdosever/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-19165754-eceb-479c-9725-7d82c6049eb8/amplify/backend/api/justdosever/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",
@@ -12,10 +12,6 @@
     "additionalAuthTypes": [
       {
         "mode": "AWS_IAM"
-      },
-      {
-        "mode": "AMAZON_COGNITO_USER_POOLS",
-        "cognitoUserPoolId": "authjustdosever"
       }
     ],
     "conflictResolution": {

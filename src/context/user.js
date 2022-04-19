@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { Auth } from "aws-amplify"
 import AlertPopUp from "../components/alert-popups"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
 const UserContext = React.createContext()
 
 const InitialData = {
@@ -34,6 +36,12 @@ const UserProvider = props => {
     await Auth.currentAuthenticatedUser().then(res => {
       if (res?.attributes?.sub) {
         setAuthUser(res)
+        try {
+          AsyncStorage.setItem("USER", JSON.stringify(res))
+        } catch (error) {
+          // Error saving data
+          console.log(error)
+        }
       } else {
         setValid({
           message: "Something went wrong. Please try again.",

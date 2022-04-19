@@ -17,6 +17,8 @@ import MenuButton from "./menu-button"
 import { Auth } from "aws-amplify"
 import CustomButton from "./custom-button"
 import UserContext from "../context/user"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
 const Sidebar = (props: DrawerContentComponentProps) => {
   const { state, navigation } = props
   const { setAuthUser } = useContext(UserContext)
@@ -34,11 +36,23 @@ const Sidebar = (props: DrawerContentComponentProps) => {
   const handlePressMenuCalendar = useCallback(() => {
     navigation.navigate("Calendar")
   }, [navigation])
+  const handleLocalLogout = useCallback(async () => {
+    setLoggingOut(true)
+    try {
+      await AsyncStorage.removeItem("USER")
+    } catch (error) {
+      console.log(error)
+    }
+    setAuthUser(null)
+    setLoggingOut(false)
+  }, [setAuthUser])
+
   const handleLogout = useCallback(() => {
     setLoggingOut(true)
     setAuthUser(null)
     handlePressBackButton()
     Auth.signOut()
+    handleLocalLogout()
   }, [Auth])
 
   return (

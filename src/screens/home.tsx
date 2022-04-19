@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Masthead from "../components/masthead"
-import MainScreen from "./main"
-import AllNotes from "./all-notes"
+import TaskPanel from "./tab-panels/task-panel"
+import NotesPanel from "./tab-panels/notes-panel"
 import { TabView, SceneMap } from "react-native-tab-view"
 import NavBar from "../components/navbar"
 import AnimatedColorBox from "../components/animate-color-box"
@@ -22,9 +22,9 @@ import {
   Text
 } from "native-base"
 
-const FirstRoute = () => <MainScreen />
+const FirstRoute = () => <TaskPanel />
 
-const SecondRoute = () => <AllNotes />
+const SecondRoute = () => <NotesPanel />
 
 const initialLayout = {
   width: Dimensions.get("window").width
