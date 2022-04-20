@@ -23,7 +23,7 @@ interface Props {
   copied: boolean
   isEditing: boolean
   onNavigateback: () => void
-  onEditModeChange: () => void
+  onEditModeChange: (item: NoteData) => void
   onDeleteModal: () => void
   onCopyNote: (title: string, desc: string) => void
   onTitleUpdate: (title: string) => void
@@ -44,6 +44,10 @@ const NoteTitleBar = (props: Props) => {
     onFinishEditingTitle,
     onPressNoteItemTitle
   } = props
+
+  const handleEdit = useCallback(() => {
+    onEditModeChange && onEditModeChange(item)
+  }, [onEditModeChange, item])
 
   const handleCopyNote = useCallback(() => {
     onCopyNote && onCopyNote(item)
@@ -115,7 +119,7 @@ const NoteTitleBar = (props: Props) => {
             size: 6,
             color: useColorModeValue("blue.500", "blue.400")
           }}
-          onPress={() => onEditModeChange()}
+          onPress={handleEdit}
         />
         <IconButton
           _icon={{

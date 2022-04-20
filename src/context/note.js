@@ -37,9 +37,10 @@ const NoteProvider = props => {
 
   const queryData = async props => {
     try {
-      const models = await DataStore.query(NoteItem, c =>
+      const models = await DataStore.query(NoteItem, c => {
         c.userID("contains", props?.attributes?.sub)
-      )
+      })
+
       setNoteItem(models)
     } catch (error) {
       console.log(error)
@@ -55,11 +56,13 @@ const NoteProvider = props => {
         userID: props.userId
       })
     )
+    queryData(authUser)
   }
 
   const handleDeleteNote = async props => {
     const item = await DataStore.query(NoteItem, props.id)
     DataStore.delete(item)
+    queryData(authUser)
   }
 
   const handleTitleChange = async props => {
@@ -82,6 +85,7 @@ const NoteProvider = props => {
         })
       )
     }
+    queryData(authUser)
   }
 
   return (

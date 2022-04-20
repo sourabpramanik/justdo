@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from "react"
+import React, { useRef, useState, useCallback, useEffect } from "react"
 import { StyleSheet, Text, ScrollView, Dimensions } from "react-native"
 import {
   actions,
@@ -18,7 +18,7 @@ import {
 } from "native-base"
 import HTMLView from "react-native-htmlview"
 import { Foundation, Feather, Ionicons } from "@expo/vector-icons"
-import QuillEditor, { QuillToolbar } from "react-native-cn-quill"
+import { useFocusEffect } from "@react-navigation/native"
 
 interface NoteData {
   id: string
@@ -27,60 +27,110 @@ interface NoteData {
 }
 
 interface Props {
-  item: NoteData
   editMode: boolean
-  desc: string
+  item: NoteData
+  isEditing: boolean
   onDescUpdate: (desc: string) => void
-  onFinishEditingDesc: () => void
-  onPressNoteItemDesc: (item: NoteData) => void
+  onSaveDesc: () => void
 }
 
-const NotesEditor = (props: Props) => {
-  const {
-    editMode,
-    item,
-    onDescUpdate,
-    onFinishEditingDesc,
-    onPressNoteItemDesc
-  } = props
+const NotesEditor = props => {
+  const { editMode, item, isEditing, onDescUpdate, onSaveDesc } = props
 
-  const { id, desc } = item
+  const { id, title, desc } = item
 
-  const handlePressDesc = useCallback(() => {
-    onPressNoteItemDesc(item)
-  }, [item, onPressNoteItemDesc])
+  useFocusEffect(() => {
+    RichText?.current?.setContentHTML(desc)
+
+    return () => {
+      RichText.current?.setContentHTML("")
+    }
+  }, [])
+
+  const strikethrough = (
+    <Foundation name="strikethrough" size={24} color="black" />
+  ) //icon for strikethrough
+  const video = <Feather name="video" size={24} color="black" /> //icon for Addvideo
   const RichText = useRef() //reference to the RichEditor component
 
-  const handleDescUpdate = useCallback(
-    val => {
-      onDescUpdate && onDescUpdate(val)
-    },
-    [onDescUpdate]
-  )
+  // const handleDescChange = useCallback(() => {
+  //   const html = RichText.current.getContentHtml()
+  //   onDescUpdate && onDescUpdate(html)
+  // }, [onDescUpdate])
+
+  // this function will be called when the editor has been initialized
+  function editorInitializedCallback() {
+    RichText.current?.setContentHTML(desc)
+  }
+
+  // Callback after height change
+
+  function onPressAddImage() {
+    // you can easily add images from your gallery
+    RichText.current?.insertImage(
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/100px-React-icon.svg.png"
+    )
+  }
+
+  function insertVideo() {
+    // you can easily add videos from your gallery
+    RichText.current?.insertVideo(
+      "https://mdn.github.io/learning-area/html/multimedia-and-embedding/video-and-audio-content/rabbit320.mp4"
+    )
+  }
+  const insertLink = (): void => {}
 
   const windowWidth = Dimensions.get("window")
-
   return (
-    <VStack flex={1} bg={useColorModeValue("warmGray.50", "primary.900")}>
-      <QuillEditor
-        style={{
-          flex: 1,
-          padding: 0,
-          // marginVertical: 5,
-          backgroundColor: "#111822"
-        }}
-        ref={RichText}
-        initialHtml="<h1>Quill Editor for react-native</h1>"
-      />
-      <QuillToolbar
-        editor={RichText}
-        options="full"
-        theme={{
-          size: 30,
-          color: "white",
-          background: "#111822"
-        }}
-      />
+    <VStack flex={1}>
+      <ScrollView style={styles.container}>
+        <RichEditor
+          disabled={!editMode}
+          initialFocus={editMode}
+          initialContentHTML={`${desc}`}
+          editorStyle={{
+            backgroundColor: "transparent",
+            color: useColorModeValue("#000", "#fff"),
+            fontSize: 40
+          }}
+          ref={RichText}
+          placeholder={"Start Writing Here"}
+          onChange={text => onDescUpdate && onDescUpdate(text)}
+          editorInitializedCallback={editorInitializedCallback}
+          useContainer={true}
+          initialHeight={windowWidth.height - 150}
+        />
+      </ScrollView>
+      {editMode && (
+        <RichToolbar
+          style={[styles.richBar]}
+          editor={RichText}
+          iconTint="darkGray"
+          unselectedIconTint={{
+            color: "darkGray"
+          }}
+          selectedIconTint={"#0a82f3"}
+          disabledIconTint="darkGray"
+          onPressAddImage={onPressAddImage}
+          iconSize={20}
+          onInsertLink={insertLink}
+          actions={[
+            "insertVideo",
+            ...defaultActions,
+            actions.setStrikethrough,
+            actions.heading1
+          ]}
+          // map icons for self made actions
+          iconMap={{
+            [actions.heading1]: ({ tintColor }) => (
+              <Text style={[styles.tib, { color: tintColor }]}>H1</Text>
+            ),
+            [actions.setStrikethrough]: strikethrough,
+            ["insertVideo"]: video
+          }}
+          insertVideo={insertVideo}
+        />
+      )}
     </VStack>
   )
 }
@@ -102,7 +152,7 @@ const styles = StyleSheet.create({
   },
   /*******************************/
   container: {
-    flex: 1
+    // flex: 1,
     // marginTop: 40,
     // backgroundColor: "red"
   },

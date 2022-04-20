@@ -4,17 +4,8 @@ import { TaskItem } from "../models"
 
 const TaskContext = React.createContext()
 
-const initialTaskItem = [
-  {
-    id: "",
-    userId: "",
-    subject: "",
-    done: false
-  }
-]
-
 const TaskProvider = props => {
-  const [taskItem, setTaskItem] = useState(initialTaskItem)
+  const [taskItem, setTaskItem] = useState([])
   const { id, userId, subject, done } = taskItem
 
   const queryData = async props => {

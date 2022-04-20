@@ -21,7 +21,7 @@ interface Props {
   item: Note
   open: boolean
   onShowDeleteModal: () => void
-  onDeleteNote: (id: string) => void
+  onDeleteNote: (item: Note) => void
 }
 
 const DeleteModal = (props: Props) => {
@@ -29,8 +29,8 @@ const DeleteModal = (props: Props) => {
   const { id, title } = item
 
   const handleRemove = useCallback(() => {
-    onDeleteNote && onDeleteNote(id)
-  }, [onDeleteNote, id])
+    onDeleteNote && onDeleteNote(item)
+  }, [onDeleteNote, item])
 
   return (
     <Modal isOpen={open} size="xl" onClose={onShowDeleteModal}>
