@@ -15,6 +15,7 @@ interface Props {
   title: string
   image: ImageSourcePropType
   children: React.ReactNode
+  dayCount: number
 }
 
 const allAgendaItems = {
@@ -29,7 +30,7 @@ const allAgendaItems = {
     { name: "Event 6", desc: "This is the sixth event" }
   ]
 }
-const Masthead = ({ title, image, children }: Props) => {
+const Masthead = ({ title, image, children, dayCount }: Props) => {
   const { authUser } = useContext(UserContext)
   const offset = new Date().getTimezoneOffset()
   const today = new Date(new Date().getTime() - offset * 60 * 1000)
@@ -69,7 +70,7 @@ const Masthead = ({ title, image, children }: Props) => {
         justifyContent="space-between"
       >
         <Text color="white" fontSize="4xl" bold letterSpacing="xl">
-          Day 43
+          Day {dayCount}
         </Text>
         <Flex alignItems="flex-end">
           <Text color="white" fontSize="xl" letterSpacing="xl">

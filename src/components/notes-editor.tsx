@@ -18,7 +18,7 @@ import {
 } from "native-base"
 import HTMLView from "react-native-htmlview"
 import { Foundation, Feather, Ionicons } from "@expo/vector-icons"
-import { useFocusEffect } from "@react-navigation/native"
+import { useFocusEffect, useRoute } from "@react-navigation/native"
 
 interface NoteData {
   id: string
@@ -36,16 +36,19 @@ interface Props {
 
 const NotesEditor = props => {
   const { editMode, item, isEditing, onDescUpdate, onSaveDesc } = props
-
+  const { route } = useRoute()
   const { id, title, desc } = item
 
-  useFocusEffect(() => {
-    RichText?.current?.setContentHTML(desc)
+  useFocusEffect(
+    useCallback(() => {
+      RichText?.current?.setContentHTML(desc)
+      RichText?.current.focusContentEditor()
 
-    return () => {
-      RichText.current?.setContentHTML("")
-    }
-  }, [])
+      return () => {
+        RichText.current?.setContentHTML("")
+      }
+    }, [id])
+  )
 
   const strikethrough = (
     <Foundation name="strikethrough" size={24} color="black" />
@@ -61,6 +64,7 @@ const NotesEditor = props => {
   // this function will be called when the editor has been initialized
   function editorInitializedCallback() {
     RichText.current?.setContentHTML(desc)
+    RichText.current?.focusContentEditor()
   }
 
   // Callback after height change
@@ -86,7 +90,7 @@ const NotesEditor = props => {
       <ScrollView style={styles.container}>
         <RichEditor
           disabled={!editMode}
-          initialFocus={editMode}
+          initialFocus={false}
           initialContentHTML={`${desc}`}
           editorStyle={{
             backgroundColor: "transparent",
@@ -96,7 +100,7 @@ const NotesEditor = props => {
           ref={RichText}
           placeholder={"Start Writing Here"}
           onChange={text => onDescUpdate && onDescUpdate(text)}
-          editorInitializedCallback={editorInitializedCallback}
+          // editorInitializedCallback={editorInitializedCallback}
           useContainer={true}
           initialHeight={windowWidth.height - 150}
         />
@@ -105,30 +109,53 @@ const NotesEditor = props => {
         <RichToolbar
           style={[styles.richBar]}
           editor={RichText}
-          iconTint="darkGray"
-          unselectedIconTint={{
-            color: "darkGray"
+          iconTint="#8a8a8a"
+          selectedIconTint={"#fff"}
+          unselectedButtonStyle={{
+            backgroundColor: "transparent"
           }}
-          selectedIconTint={"#0a82f3"}
-          disabledIconTint="darkGray"
+          selectedButtonStyle={{
+            backgroundColor: "#0a82f3",
+            borderRadius: 5,
+            height: 40
+          }}
+          // disabledIconTint="darkGray"
           onPressAddImage={onPressAddImage}
           iconSize={20}
           onInsertLink={insertLink}
           actions={[
-            "insertVideo",
-            ...defaultActions,
-            actions.setStrikethrough,
-            actions.heading1
+            actions.redo,
+            actions.undo,
+            actions.heading1,
+            actions.heading2,
+            actions.heading3,
+            actions.heading4,
+            actions.heading5,
+            actions.setBold,
+            actions.setItalic,
+            actions.setUnderline,
+            actions.removeFormat,
+            actions.insertBulletsList,
+            actions.insertOrderedList
           ]}
           // map icons for self made actions
           iconMap={{
             [actions.heading1]: ({ tintColor }) => (
               <Text style={[styles.tib, { color: tintColor }]}>H1</Text>
             ),
-            [actions.setStrikethrough]: strikethrough,
-            ["insertVideo"]: video
+            [actions.heading2]: ({ tintColor }) => (
+              <Text style={[styles.tib, { color: tintColor }]}>H2</Text>
+            ),
+            [actions.heading3]: ({ tintColor }) => (
+              <Text style={[styles.tib, { color: tintColor }]}>H3</Text>
+            ),
+            [actions.heading4]: ({ tintColor }) => (
+              <Text style={[styles.tib, { color: tintColor }]}>H4</Text>
+            ),
+            [actions.heading5]: ({ tintColor }) => (
+              <Text style={[styles.tib, { color: tintColor }]}>H5</Text>
+            )
           }}
-          insertVideo={insertVideo}
         />
       )}
     </VStack>

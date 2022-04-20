@@ -75,7 +75,7 @@ export default function NotesPanel() {
                 <Animated.View
                   style={{ justifyContent: "center", transform: [{ scale }] }}
                 >
-                  <NoteItem title={item.title} />
+                  <NoteItem title={item.title ? item.title : "Untitled"} />
                 </Animated.View>
               </Pressable>
             )

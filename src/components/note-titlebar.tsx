@@ -78,7 +78,7 @@ const NoteTitleBar = (props: Props) => {
         />
         {isEditing ? (
           <Input
-            value={item.title}
+            value={item.title ? item.title : "Untitled"}
             // variant="outlined"
             underline={false}
             truncated
@@ -89,7 +89,7 @@ const NoteTitleBar = (props: Props) => {
             my="5"
             fontSize="2xl"
             fontWeight="bold"
-            autoFocus
+            // autoFocus
             blurOnSubmit
             onChange={handleTitleUpdate}
             onBlur={onFinishEditingTitle}
@@ -107,7 +107,7 @@ const NoteTitleBar = (props: Props) => {
             fontSize="2xl"
             fontWeight="bold"
           >
-            {item.title}
+            {item.title ? item.title : "Untitled"}
           </Heading>
         )}
       </Flex>

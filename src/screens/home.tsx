@@ -1,10 +1,12 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Masthead from "../components/masthead"
 import TaskPanel from "./tab-panels/task-panel"
 import NotesPanel from "./tab-panels/notes-panel"
 import { TabView, SceneMap } from "react-native-tab-view"
 import NavBar from "../components/navbar"
 import AnimatedColorBox from "../components/animate-color-box"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
 import {
   Dimensions,
   StatusBar,
@@ -36,6 +38,48 @@ const renderScene = SceneMap({
 
 export default function HomeScreen() {
   const [index, setIndex] = useState(0)
+  const [dayCount, setDayCount] = useState({
+    day: 0,
+    activeDate: ""
+  })
+
+  useEffect(() => {
+    if (dayCount.day === 0) {
+      AsyncStorage.getItem("dayCount").then(res => {
+        if (res) {
+          const data = JSON.parse(res)
+          if (new Date().toDateString() !== data.activeDate) {
+            setDayCount({
+              day: dayCount.day + 1,
+              activeDate: new Date().toDateString()
+            })
+            AsyncStorage.setItem(
+              "dayCount",
+              JSON.stringify({
+                day: data.day + 1,
+                activeDate: new Date().toDateString()
+              })
+            )
+          } else {
+            setDayCount(data)
+          }
+        } else {
+          setDayCount({
+            day: dayCount.day + 1,
+            activeDate: new Date().toDateString()
+          })
+          AsyncStorage.setItem(
+            "dayCount",
+            JSON.stringify({
+              day: dayCount.day + 1,
+              activeDate: new Date().toDateString()
+            })
+          )
+        }
+      })
+    }
+  }, [dayCount])
+
   const [routes] = useState([
     {
       key: "first",
@@ -105,7 +149,7 @@ export default function HomeScreen() {
     >
       <NavBar />
       <Center mx={5}>
-        <Masthead />
+        <Masthead dayCount={dayCount.day} />
       </Center>
       <VStack flex={1} space={1}>
         <TabView
