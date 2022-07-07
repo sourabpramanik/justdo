@@ -88,11 +88,11 @@ const UserProvider = props => {
       }
     } catch (error) {
       setValid({
-        message: "Something went wrong. Please try again.",
+        message: error.message,
         status: true
       })
+      setOpen(false)
       setSignUpLoading(false)
-      console.log(error)
     }
   }
   const handleSignupConfirmation = async () => {

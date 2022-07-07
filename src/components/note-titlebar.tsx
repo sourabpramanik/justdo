@@ -1,9 +1,7 @@
 import React, { useCallback } from "react"
 import {
   Flex,
-  Text,
   useColorModeValue,
-  Icon,
   Input,
   IconButton,
   Heading
@@ -78,9 +76,8 @@ const NoteTitleBar = (props: Props) => {
         />
         {isEditing ? (
           <Input
-            value={item.title ? item.title : "Untitled"}
+            value={item.title}
             // variant="outlined"
-            underline={false}
             truncated
             maxW="200"
             px={1}
@@ -130,24 +127,24 @@ const NoteTitleBar = (props: Props) => {
           }}
           onPress={onShowDeleteModal}
         />
-        <IconButton
+        {/* <IconButton
           _icon={
             !copied
               ? {
-                  as: Feather,
-                  name: "copy",
-                  size: 6,
-                  color: useColorModeValue("blue.500", "blue.400")
-                }
+                as: Feather,
+                name: "copy",
+                size: 6,
+                color: useColorModeValue("blue.500", "blue.400")
+              }
               : {
-                  as: AntDesign,
-                  name: "checkcircle",
-                  size: 6,
-                  color: useColorModeValue("blue.500", "blue.400")
-                }
+                as: AntDesign,
+                name: "checkcircle",
+                size: 6,
+                color: useColorModeValue("blue.500", "blue.400")
+              }
           }
           onPress={handleCopyNote}
-        />
+        /> */}
       </Flex>
     </Flex>
   )

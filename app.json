@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "JustDo.",
+    "name": "JustDo",
     "slug": "justdo",
     "version": "1.0.3",
     "orientation": "portrait",
@@ -26,12 +26,11 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/justdo-logo.png",
-        "backgroundColor": "#FFFFFF"        
+        "backgroundColor": "#FFFFFF"
       }
-      
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }    
+    }
   }
 }

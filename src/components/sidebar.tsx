@@ -7,7 +7,6 @@ import {
   IconButton,
   useColorModeValue,
   Center,
-  Button,
   Icon
 } from "native-base"
 import { DrawerContentComponentProps } from "@react-navigation/drawer"
@@ -94,13 +93,6 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           icon="home"
         >
           Home
-        </MenuButton>
-        <MenuButton
-          active={currentRoute === "Notes"}
-          // onPress={handlePressMenuAbout}
-          icon="edit-3"
-        >
-          Notes
         </MenuButton>
         <MenuButton
           active={currentRoute === "Calendar"}

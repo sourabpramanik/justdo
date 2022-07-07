@@ -42,7 +42,7 @@ const Signin = props => {
         borderTopLeftRadius="20px"
         borderTopRightRadius="20px"
         pt="50px"
-        bg="warmGray.50"
+        bg="white"
       >
         <FormControl isRequired>
           <InputField

@@ -39,6 +39,7 @@ const App = () => {
   useEffect(() => {
     setLoading(true)
     localUser()
+    // return() => localUser()
   }, [])
 
   function check() {

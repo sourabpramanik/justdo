@@ -68,16 +68,16 @@ export default function NotesPanel() {
             })
 
             return (
-              <Pressable
-                key={item.id}
-                onPress={() => navigation.navigate("Note", { id: item.id })}
+              <Animated.View
+                key={index}
+                style={{ justifyContent: "center", transform: [{ scale }] }}
               >
-                <Animated.View
-                  style={{ justifyContent: "center", transform: [{ scale }] }}
+                <Pressable
+                  onPress={() => navigation.navigate("Note", { id: item.id })}
                 >
                   <NoteItem title={item.title ? item.title : "Untitled"} />
-                </Animated.View>
-              </Pressable>
+                </Pressable>
+              </Animated.View>
             )
           }}
         />

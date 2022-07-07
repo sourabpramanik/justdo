@@ -27,7 +27,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import AnimatedColorBox from "../components/animate-color-box"
 import DeleteModal from "../components/delete-modal"
 import * as Clipboard from "expo-clipboard"
-import { Feather } from "@expo/vector-icons"
+
 import { AnimatePresence } from "moti"
 import AnimatedFab from "../components/animate-fab"
 
@@ -50,11 +50,10 @@ const Note = () => {
   const toast = useToast()
 
   useEffect(() => {
-    if (!noteId || !authUser) {
-      return
-    }
-    queryData(authUser)
-  }, [noteId, authUser])
+    if (noteId || authUser) {
+      queryData(authUser)
+    } else return
+  }, [noteId])
 
   useFocusEffect(
     React.useCallback(() => {
@@ -169,7 +168,6 @@ const Note = () => {
         }
       })
     }
-    setTimeout(() => {}, 1000)
   }, [note])
 
   const handlePressNoteItemTitle = useCallback(item => {
